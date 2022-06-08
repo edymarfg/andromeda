@@ -2,6 +2,7 @@ package br.com.triersistemas.andromeda.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.web.bind.annotation.*;
 
@@ -31,16 +32,16 @@ public class FarmaceuticoController {
 		return FARMACEUTICOS;
 	}
 
-	@PutMapping("/alterar/{index}")
-	public List<Farmaceutico> alterar(@PathVariable int index, @RequestBody FarmaceuticoModel model) {
-		FARMACEUTICOS.remove(index);
+	@PutMapping("/alterar/{id}")
+	public List<Farmaceutico> alterar(@PathVariable UUID id, @RequestBody FarmaceuticoModel model) {
+		FARMACEUTICOS.remove(id);
 		FARMACEUTICOS.add(new Farmaceutico(model.getNome(), model.getNiver(), model.getCpf(), model.getId()));
 		return FARMACEUTICOS;
 	}
 
-	@DeleteMapping("/remover/{index}")
-	public List<Farmaceutico> remover(@PathVariable int index) {
-		FARMACEUTICOS.remove(index);
+	@DeleteMapping("/remover/{id}")
+	public List<Farmaceutico> remover(@PathVariable UUID id) {
+		FARMACEUTICOS.remove(id);
 		return FARMACEUTICOS;
 	}
 

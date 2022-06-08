@@ -1,12 +1,11 @@
 package br.com.triersistemas.andromeda.domain;
 
+import br.com.triersistemas.andromeda.helper.StringUtils;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.SplittableRandom;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -14,37 +13,26 @@ public abstract class Pessoa {
     private String nome;
     private LocalDate niver;
 
-    private Integer id;
+    private UUID id;
 
     protected Pessoa() {
-        List<String> nomes = new ArrayList<>();
-        nomes.add("Bianca");
-        nomes.add("Vitória");
-        nomes.add("Caethana");
-        nomes.add("Kay");
-        nomes.add("Amanda");
-        nomes.add("Carol");
-        nomes.add("Davi");
-        nomes.add("Igor");
-        nomes.add("Antônio");
-        nomes.add("Edymar");
-        nomes.add("Edward");
-
-        SplittableRandom r = new SplittableRandom();
-        this.nome = nomes.get(r.nextInt(0, nomes.size()));
+        this.nome = StringUtils.getRandomName();
         this.niver = LocalDate.now();
-        this.id = GenerateId.verificaId(0);
+        this.id = UUID.randomUUID();
     }
 
-    protected Pessoa(final String nome, final LocalDate niver, final Integer id) {
+    protected Pessoa(final String nome, final LocalDate niver) {
         this.nome = nome;
         this.niver = niver;
-        this.id = GenerateId.verificaId(id);
     }
 
-    public Integer getId(){
-        return this.id;
+    protected Pessoa editar(final String nome, final LocalDate niver) {
+        this.nome = nome;
+        this.niver = niver;
+        return this;
     }
+
+    public UUID getId() { return id; }
 
     public String getNome() {
         return nome;

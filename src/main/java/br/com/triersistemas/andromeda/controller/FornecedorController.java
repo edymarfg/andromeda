@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/fornecedor")
@@ -30,16 +31,16 @@ public class FornecedorController {
         return FORNECEDORES;
     }
 
-    @PutMapping("/alterar/{index}")
-    public List<Fornecedor> alterar(@PathVariable int index, @RequestBody FornecedorModel model) {
-        FORNECEDORES.remove(index);
+    @PutMapping("/alterar/{id}")
+    public List<Fornecedor> alterar(@PathVariable UUID id, @RequestBody FornecedorModel model) {
+        FORNECEDORES.remove(id);
         FORNECEDORES.add(new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj(), model.getId()));
         return FORNECEDORES;
     }
 
-    @DeleteMapping("/remover/{index}")
-    public List<Fornecedor> remover(@PathVariable int index) {
-        FORNECEDORES.remove(index);
+    @DeleteMapping("/remover/{id}")
+    public List<Fornecedor> remover(@PathVariable UUID id) {
+        FORNECEDORES.remove(id);
         return FORNECEDORES;
     }
 
