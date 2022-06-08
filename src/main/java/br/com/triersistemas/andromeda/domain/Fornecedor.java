@@ -13,8 +13,8 @@ public class Fornecedor extends PessoaJuridica {
         geraProdutos();
     }
 
-    public Fornecedor(final String nome, final LocalDate niver, final String cnpj) {
-        super(nome, niver, cnpj);
+    public Fornecedor(final String nome, final LocalDate niver, final String cnpj, final Integer id) {
+        super(nome, niver, cnpj, id);
         geraProdutos();
     }
 

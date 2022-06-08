@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.SplittableRandom;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class Pessoa {
     private String nome;
@@ -32,12 +33,13 @@ public abstract class Pessoa {
         SplittableRandom r = new SplittableRandom();
         this.nome = nomes.get(r.nextInt(0, nomes.size()));
         this.niver = LocalDate.now();
-        this.id = id++;
+        this.id = GenerateId.verificaId(0);
     }
 
-    protected Pessoa(final String nome, final LocalDate niver) {
+    protected Pessoa(final String nome, final LocalDate niver, final Integer id) {
         this.nome = nome;
         this.niver = niver;
+        this.id = GenerateId.verificaId(id);
     }
 
     public Integer getId(){

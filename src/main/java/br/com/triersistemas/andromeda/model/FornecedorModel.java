@@ -9,5 +9,6 @@ public class FornecedorModel {
     private String nome;
     private LocalDate niver;
     private String cnpj;
+    private Integer id;
 
 }

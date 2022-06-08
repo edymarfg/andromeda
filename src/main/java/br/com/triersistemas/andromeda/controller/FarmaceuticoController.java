@@ -1,6 +1,5 @@
 package br.com.triersistemas.andromeda.controller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class FarmaceuticoController {
 
 	@PostMapping("/cadastrar")
 	public List<Farmaceutico> cadastrar(@RequestBody FarmaceuticoModel model) {
-		FARMACEUTICOS.add(new Farmaceutico(model.getNome(), model.getNiver(), model.getCpf()));
+		FARMACEUTICOS.add(new Farmaceutico(model.getNome(), model.getNiver(), model.getCpf(), model.getId()));
 		return FARMACEUTICOS;
 	}
 
@@ -35,7 +34,7 @@ public class FarmaceuticoController {
 	@PutMapping("/alterar/{index}")
 	public List<Farmaceutico> alterar(@PathVariable int index, @RequestBody FarmaceuticoModel model) {
 		FARMACEUTICOS.remove(index);
-		FARMACEUTICOS.add(new Farmaceutico(model.getNome(), model.getNiver(), model.getCpf()));
+		FARMACEUTICOS.add(new Farmaceutico(model.getNome(), model.getNiver(), model.getCpf(), model.getId()));
 		return FARMACEUTICOS;
 	}
 

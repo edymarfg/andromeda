@@ -13,8 +13,8 @@ public class Farmaceutico extends PessoaFisica {
         geraOferta();
     }
 
-    public Farmaceutico(final String nome, final LocalDate niver, final String cpf) {
-        super(nome, niver, cpf);
+    public Farmaceutico(final String nome, final LocalDate niver, final String cpf, final Integer id) {
+        super(nome, niver, cpf, id);
         geraOferta();
     }
 

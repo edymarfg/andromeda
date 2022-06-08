@@ -18,8 +18,8 @@ public abstract class PessoaFisica extends Pessoa {
         this.cpf = this.geraCpf(digitos);
     }
 
-    protected PessoaFisica(final String nome, final LocalDate niver, final String cpf) {
-        super(nome, niver);
+    protected PessoaFisica(final String nome, final LocalDate niver, final String cpf, final Integer id) {
+        super(nome, niver, id);
         this.cpf = extractNumbers(cpf);
     }
 

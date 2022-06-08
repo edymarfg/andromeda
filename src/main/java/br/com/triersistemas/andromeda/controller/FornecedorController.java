@@ -1,8 +1,6 @@
 package br.com.triersistemas.andromeda.controller;
 
-import br.com.triersistemas.andromeda.domain.Farmaceutico;
 import br.com.triersistemas.andromeda.domain.Fornecedor;
-import br.com.triersistemas.andromeda.model.FarmaceuticoModel;
 import br.com.triersistemas.andromeda.model.FornecedorModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +20,7 @@ public class FornecedorController {
 
     @PostMapping("/cadastrar")
     public List<Fornecedor> cadastrar(@RequestBody FornecedorModel model) {
-        FORNECEDORES.add(new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj()));
+        FORNECEDORES.add(new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj(), model.getId()));
         return FORNECEDORES;
     }
 
@@ -35,7 +33,7 @@ public class FornecedorController {
     @PutMapping("/alterar/{index}")
     public List<Fornecedor> alterar(@PathVariable int index, @RequestBody FornecedorModel model) {
         FORNECEDORES.remove(index);
-        FORNECEDORES.add(new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj()));
+        FORNECEDORES.add(new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj(), model.getId()));
         return FORNECEDORES;
     }
 

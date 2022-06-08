@@ -18,8 +18,8 @@ public abstract class PessoaJuridica extends Pessoa {
         this.cnpj = this.geraCnpj(digitos);
     }
 
-    protected PessoaJuridica(final String nome, final LocalDate niver, final String cnpj) {
-        super(nome, niver);
+    protected PessoaJuridica(final String nome, final LocalDate niver, final String cnpj, final Integer id) {
+        super(nome, niver, id);
         this.cnpj = extractNumbers(cnpj);
     }
 
