@@ -1,6 +1,7 @@
 package br.com.triersistemas.andromeda.controller;
 
 import br.com.triersistemas.andromeda.domain.Fornecedor;
+import br.com.triersistemas.andromeda.exceptions.NaoExisteException;
 import br.com.triersistemas.andromeda.model.FornecedorModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,36 +13,44 @@ import java.util.UUID;
 @RequestMapping("/fornecedor")
 public class FornecedorController {
 
-    private static final List<Fornecedor> FORNECEDORES = new ArrayList<>();
+    public static final List<Fornecedor> LIST = new ArrayList<>();
 
     @GetMapping("/consultar")
     public List<Fornecedor> consultar() {
-        return FORNECEDORES;
+        return LIST;
     }
 
     @PostMapping("/cadastrar")
-    public List<Fornecedor> cadastrar(@RequestBody FornecedorModel model) {
-        FORNECEDORES.add(new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj(), model.getId()));
-        return FORNECEDORES;
+    public Fornecedor cadastrar(@RequestBody FornecedorModel model) {
+        var domain = new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj());
+        LIST.add(domain);
+        return domain;
     }
 
-    @PostMapping("/cadastro")
-    public List<Fornecedor> cadastro() {
-        FORNECEDORES.add(new Fornecedor());
-        return FORNECEDORES;
+    @PostMapping("/cadastrar-random")
+    public Fornecedor cadastrarRandom() {
+        var domain = new Fornecedor();
+        LIST.add(domain);
+        return domain;
     }
 
     @PutMapping("/alterar/{id}")
-    public List<Fornecedor> alterar(@PathVariable UUID id, @RequestBody FornecedorModel model) {
-        FORNECEDORES.remove(id);
-        FORNECEDORES.add(new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj(), model.getId()));
-        return FORNECEDORES;
+    public Fornecedor alterar(@PathVariable UUID id, @RequestBody FornecedorModel model) {
+        var domain = LIST.stream()
+                .filter(x -> x.getId().equals(id))
+                .findFirst()
+                .orElseThrow(NaoExisteException::new);
+        domain.editar(model.getNome(), model.getNiver(), model.getCnpj());
+        return domain;
     }
 
     @DeleteMapping("/remover/{id}")
-    public List<Fornecedor> remover(@PathVariable UUID id) {
-        FORNECEDORES.remove(id);
-        return FORNECEDORES;
+    public Fornecedor remover(@PathVariable UUID id) {
+        var domain = LIST.stream()
+                .filter(x -> x.getId().equals(id))
+                .findFirst()
+                .orElseThrow(NaoExisteException::new);
+        LIST.remove(domain);
+        return domain;
     }
-
 }

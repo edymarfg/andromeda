@@ -5,7 +5,6 @@ import lombok.Getter;
 import java.math.BigDecimal;
 
 @Getter
-public class ProdutoModel {
-    private String nome;
+public class PagarPedidoModel {
     private BigDecimal valor;
 }

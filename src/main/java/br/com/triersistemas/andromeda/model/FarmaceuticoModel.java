@@ -1,15 +1,12 @@
 package br.com.triersistemas.andromeda.model;
 
-import java.time.LocalDate;
-
 import lombok.Getter;
+
+import java.time.LocalDate;
 
 @Getter
 public class FarmaceuticoModel {
-	
-	private String nome;
-	private LocalDate niver;
-	private String cpf;
-	private Integer id;
-
+    private String nome;
+    private LocalDate niver;
+    private String cpf;
 }
