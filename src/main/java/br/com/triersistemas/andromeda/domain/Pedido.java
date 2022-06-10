@@ -16,7 +16,7 @@ public class Pedido {
     private UUID id;
     private Cliente cliente;
     private Farmaceutico farmaceutico;
-    private List<Produto> produtos;
+    private List<ItemPedido> produtos;
     private BigDecimal valor;
     private BigDecimal valorPago;
     private BigDecimal troco;
@@ -36,11 +36,11 @@ public class Pedido {
         this.status = EnumStatusPedido.PENDENTE;
     }
 
-    public Pedido adicionarProduto(final List<Produto> produtos) {
+    public Pedido adicionarProduto(final ItemPedido produto) {
         if (EnumStatusPedido.PENDENTE.equals(this.status)) {
-            this.produtos.addAll(produtos);
+            this.produtos.add(produto);
             this.valor = this.produtos.stream()
-                    .map(Produto::getValor)
+                    .map(ItemPedido::getValor)
                     .reduce(BigDecimal.ZERO, BigDecimal::add);
         }
         return this;
