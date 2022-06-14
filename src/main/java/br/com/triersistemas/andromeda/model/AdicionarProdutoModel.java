@@ -7,5 +7,5 @@ import java.util.UUID;
 
 @Getter
 public class AdicionarProdutoModel {
-    private List<UUID> idsProdutos;
+    private List<UUID> idsProduto;
 }

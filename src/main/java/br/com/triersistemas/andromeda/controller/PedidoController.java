@@ -7,6 +7,8 @@ import br.com.triersistemas.andromeda.model.AdicionarProdutoModel;
 import br.com.triersistemas.andromeda.model.ItemPedidoModel;
 import br.com.triersistemas.andromeda.model.PagarPedidoModel;
 import br.com.triersistemas.andromeda.model.PedidoModel;
+import br.com.triersistemas.andromeda.service.ProdutoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -19,7 +21,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/pedido")
 public class PedidoController {
 
-    public static final List<Pedido> LIST = new ArrayList<>();
+    @Autowired
+    private ProdutoService produtoService;
 
     @GetMapping("/consultar")
     public List<Pedido> consultar() {
@@ -51,8 +54,10 @@ public class PedidoController {
                 .findFirst()
                 .orElseThrow(NaoExisteException::new);
 
-        var produto = ProdutoController.LIST.stream()
-                            .filter(x -> x.getId().equals(model.getIdProduto()))
+        var produtos = model.getIdsProduto().stream()
+                .map(idProduto-> {
+                    return ProdutoController.LIST.stream()
+                            .filter(x -> x.getId().equals(idProduto))
                             .findFirst()
                             .orElseThrow(NaoExisteException::new);
         BigDecimal valor = new BigDecimal(model.getQuantidade());

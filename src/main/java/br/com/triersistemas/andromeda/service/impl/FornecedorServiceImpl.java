@@ -1,0 +1,48 @@
+package br.com.triersistemas.andromeda.service.impl;
+
+import br.com.triersistemas.andromeda.domain.Fornecedor;
+import br.com.triersistemas.andromeda.exceptions.NaoExisteException;
+import br.com.triersistemas.andromeda.model.FornecedorModel;
+import br.com.triersistemas.andromeda.repository.FornecedorRepository;
+import br.com.triersistemas.andromeda.service.FornecedorService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.UUID;
+
+public class FornecedorServiceImpl implements FornecedorService {
+
+    @Autowired
+    private FornecedorRepository fornecedorRepository;
+
+    @Override
+    public List<Fornecedor> consultar() {
+        return fornecedorRepository.consultar();
+    }
+
+    @Override
+    public Fornecedor consultar(UUID id) {
+        return fornecedorRepository.consultar(id).orElseThrow(NaoExisteException::new);
+    }
+
+    @Override
+    public Fornecedor cadastrar(FornecedorModel model) {
+        Fornecedor fornecedor = new Fornecedor(model.getNome(), model.getNiver(), model.getCnpj());
+        fornecedorRepository.cadastrar(fornecedor);
+        return fornecedor;
+    }
+
+    @Override
+    public Fornecedor alterar(UUID id, FornecedorModel model) {
+        Fornecedor fornecedor = this.consultar(id);
+        fornecedor.editar(model.getNome(), model.getNiver(), model.getCnpj());
+        return fornecedor;
+    }
+
+    @Override
+    public Fornecedor remover(UUID id) {
+        Fornecedor fornecedor = this.consultar(id);
+        fornecedorRepository.excluir(fornecedor);
+        return fornecedor;
+    }
+}
