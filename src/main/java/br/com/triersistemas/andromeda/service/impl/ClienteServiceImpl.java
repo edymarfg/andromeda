@@ -6,10 +6,11 @@ import br.com.triersistemas.andromeda.model.ClienteModel;
 import br.com.triersistemas.andromeda.repository.ClienteRepository;
 import br.com.triersistemas.andromeda.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-
+@Service
 public class ClienteServiceImpl implements ClienteService {
 
     @Autowired

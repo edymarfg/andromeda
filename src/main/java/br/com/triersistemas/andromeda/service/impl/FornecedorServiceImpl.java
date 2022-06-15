@@ -6,10 +6,11 @@ import br.com.triersistemas.andromeda.model.FornecedorModel;
 import br.com.triersistemas.andromeda.repository.FornecedorRepository;
 import br.com.triersistemas.andromeda.service.FornecedorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-
+@Service
 public class FornecedorServiceImpl implements FornecedorService {
 
     @Autowired
