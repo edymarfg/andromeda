@@ -34,6 +34,13 @@ public class FornecedorServiceImpl implements FornecedorService {
     }
 
     @Override
+    public Fornecedor cadastrarRandom() {
+        Fornecedor fornecedor = new Fornecedor();
+        fornecedorRepository.cadastrar(fornecedor);
+        return fornecedor;
+    }
+
+    @Override
     public Fornecedor alterar(UUID id, FornecedorModel model) {
         Fornecedor fornecedor = this.consultar(id);
         fornecedor.editar(model.getNome(), model.getNiver(), model.getCnpj());

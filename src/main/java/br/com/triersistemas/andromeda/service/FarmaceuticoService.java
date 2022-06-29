@@ -12,6 +12,7 @@ public interface FarmaceuticoService {
     List<Farmaceutico> consultar();
     Farmaceutico consultar(UUID id);
     Farmaceutico cadastrar(FarmaceuticoModel model);
+    Farmaceutico cadastrarRandom();
     Farmaceutico alterar(UUID id, FarmaceuticoModel model);
     Farmaceutico remover(UUID id);
 }

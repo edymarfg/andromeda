@@ -23,6 +23,11 @@ public class FarmaceuticoController {
         return farmaceuticoService.consultar();
     }
 
+    @PostMapping("/cadastrar-random")
+    public Farmaceutico cadastrarRandom() {
+        return farmaceuticoService.cadastrarRandom();
+    }
+
     @PostMapping("/cadastrar")
     public Farmaceutico cadastrar(@RequestBody FarmaceuticoModel model) {
         return farmaceuticoService.cadastrar(model);

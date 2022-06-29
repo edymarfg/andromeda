@@ -35,6 +35,13 @@ public class FarmaceuticoServiceImpl implements FarmaceuticoService {
     }
 
     @Override
+    public Farmaceutico cadastrarRandom() {
+        Farmaceutico farmaceutico = new Farmaceutico();
+        farmaceuticoRepository.cadastrar(farmaceutico);
+        return farmaceutico;
+    }
+
+    @Override
     public Farmaceutico alterar(UUID id, FarmaceuticoModel model) {
         Farmaceutico farmaceutico = this.consultar(id);
         farmaceutico.editar(model.getNome(), model.getNiver(), model.getCpf());

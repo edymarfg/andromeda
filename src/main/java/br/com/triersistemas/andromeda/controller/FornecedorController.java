@@ -28,6 +28,11 @@ public class FornecedorController {
         return fornecedorService.cadastrar(model);
     }
 
+    @PostMapping("/cadastrar-random")
+    public Fornecedor cadastrarRandom() {
+        return fornecedorService.cadastrarRandom();
+    }
+
     @PutMapping("/alterar/{id}")
     public Fornecedor alterar(@PathVariable UUID id, @RequestBody FornecedorModel model) {
         return fornecedorService.alterar(id, model);
