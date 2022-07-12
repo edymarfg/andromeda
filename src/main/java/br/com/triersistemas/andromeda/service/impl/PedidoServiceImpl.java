@@ -1,6 +1,7 @@
 package br.com.triersistemas.andromeda.service.impl;
 
 import br.com.triersistemas.andromeda.domain.Cliente;
+import br.com.triersistemas.andromeda.domain.Farmaceutico;
 import br.com.triersistemas.andromeda.domain.Pedido;
 import br.com.triersistemas.andromeda.domain.Produto;
 import br.com.triersistemas.andromeda.exceptions.NaoExisteException;
@@ -15,6 +16,7 @@ import br.com.triersistemas.andromeda.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,7 +48,7 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Pedido cadastrar(PedidoModel model) {
         var cliente = new Cliente(clienteService.consultar(model.getIdCliente()));
-        var farmaceutico = farmaceuticoService.consultar(model.getIdFarmaceutico());
+        var farmaceutico = new Farmaceutico(farmaceuticoService.consultar(model.getIdFarmaceutico()));
         var pedido = new Pedido(cliente, farmaceutico);
         pedidoRepository.cadastrar(pedido);
         return pedido;
@@ -55,7 +57,8 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public Pedido adicionarProduto(UUID id, AdicionarProdutoModel model) {
         Pedido pedido = this.consultar(id);
-        List<Produto> produtos = produtoService.consultar(model.getIdsProdutos());
+        //List<Produto> produtos = produtoService.consultar(model.getIdsProdutos());
+        List<Produto> produtos = new ArrayList<>();
         pedido.addProdutos(produtos);
         return pedido;
     }
