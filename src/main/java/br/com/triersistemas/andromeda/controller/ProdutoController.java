@@ -23,6 +23,11 @@ public class ProdutoController {
         return produtoService.consultar();
     }
 
+    @GetMapping("/buscar-por-pedido/{idPedido}")
+    public List<ProdutoModel> buscarPorPedido(@PathVariable UUID idPedido) {
+        return produtoService.buscarPorPedido(idPedido);
+    }
+
     @PostMapping("/cadastrar")
     public ProdutoModel cadastrar(@RequestBody ProdutoModel model) {
         return produtoService.cadastrar(model);

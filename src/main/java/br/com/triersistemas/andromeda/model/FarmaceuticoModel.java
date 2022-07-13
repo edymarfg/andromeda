@@ -2,10 +2,12 @@ package br.com.triersistemas.andromeda.model;
 
 import br.com.triersistemas.andromeda.domain.Farmaceutico;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@NoArgsConstructor
 @Getter
 public class FarmaceuticoModel {
     private UUID id;

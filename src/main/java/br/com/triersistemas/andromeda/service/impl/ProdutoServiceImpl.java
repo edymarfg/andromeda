@@ -35,10 +35,14 @@ public class ProdutoServiceImpl implements ProdutoService {
         return produtoRepository.findAllById(ids).stream().map(ProdutoModel::new).toList();
     }
 
+    protected List<Produto> consultarProdutos(List<UUID> ids) {
+        return produtoRepository.findAllById(ids);
+    }
+
     @Override
     public ProdutoModel cadastrar(ProdutoModel model) {
         Produto produto = new Produto(model);
-        return new ProdutoModel(produtoRepository.save(produto));
+        return new ProdutoModel(this.produtoRepository.save(produto));
     }
 
     @Override
@@ -53,6 +57,11 @@ public class ProdutoServiceImpl implements ProdutoService {
         Produto produto = buscarPorId(id);
         produtoRepository.delete(produto);
         return new ProdutoModel(produto);
+    }
+
+    @Override
+    public List<ProdutoModel> buscarPorPedido(UUID idPedido) {
+        return produtoRepository.buscarPorPedido(idPedido).stream().map(ProdutoModel::new).toList();
     }
 
     private Produto buscarPorId(UUID id){

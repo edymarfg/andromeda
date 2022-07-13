@@ -2,6 +2,7 @@ package br.com.triersistemas.andromeda.repository;
 
 import br.com.triersistemas.andromeda.domain.Farmaceutico;
 import br.com.triersistemas.andromeda.domain.Fornecedor;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;

@@ -2,7 +2,9 @@ package br.com.triersistemas.andromeda.domain;
 
 import br.com.triersistemas.andromeda.enums.EnumStatusPedido;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,22 +12,49 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
+@Table(name = "pedido")
+@NoArgsConstructor
 @Getter
 public class Pedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id",
+    insertable = false, updatable = false, nullable = false, unique = true)
     private UUID id;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "farmaceutico_id", referencedColumnName = "id")
     private Farmaceutico farmaceutico;
+    @ManyToMany
+    @JoinTable(
+            name = "pedido_produto",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id")
+    )
     private List<Produto> produtos;
     private BigDecimal valor;
+    @Column(name = "valor_pago")
     private BigDecimal valorPago;
     private BigDecimal troco;
     private LocalDateTime data;
+    @Column(name = "data_pagamento")
     private LocalDateTime dataPagamento;
+    @Enumerated(EnumType.STRING)
     private EnumStatusPedido status;
 
+    public void setFarmaceutico(Farmaceutico farmaceutico) {
+        this.farmaceutico = farmaceutico;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public Pedido(final Cliente cliente, final Farmaceutico farmaceutico) {
-        this.id = UUID.randomUUID();
         this.cliente = cliente;
         this.farmaceutico = farmaceutico;
         this.produtos = new ArrayList<>();

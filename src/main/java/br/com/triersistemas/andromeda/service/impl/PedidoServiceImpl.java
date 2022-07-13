@@ -27,45 +27,47 @@ public class PedidoServiceImpl implements PedidoService {
     private PedidoRepository pedidoRepository;
 
     @Autowired
-    private FarmaceuticoService farmaceuticoService;
+    private FarmaceuticoServiceImpl farmaceuticoService;
 
     @Autowired
-    private ClienteService clienteService;
+    private ClienteServiceImpl clienteService;
 
     @Autowired
-    private ProdutoService produtoService;
+    private ProdutoServiceImpl produtoService;
 
     @Override
-    public List<Pedido> consultar() {
-        return pedidoRepository.consultar();
+    public List<PedidoModel> consultar() {
+        return pedidoRepository.findAll().stream().map(PedidoModel::new).toList();
     }
 
     @Override
-    public Pedido consultar(UUID id) {
-        return pedidoRepository.consultar(id).orElseThrow(NaoExisteException::new);
+    public PedidoModel consultar(UUID id) {
+        return new PedidoModel(this.buscarPorId(id));
     }
 
     @Override
-    public Pedido cadastrar(PedidoModel model) {
-        var cliente = new Cliente(clienteService.consultar(model.getIdCliente()));
-        var farmaceutico = new Farmaceutico(farmaceuticoService.consultar(model.getIdFarmaceutico()));
+    public PedidoModel cadastrar(PedidoModel model) {
+        var cliente = clienteService.consultarCliente(model.getCliente().getId());
+        var farmaceutico = farmaceuticoService.consultarFarmaceutico(model.getFarmaceutico().getId());
         var pedido = new Pedido(cliente, farmaceutico);
-        pedidoRepository.cadastrar(pedido);
-        return pedido;
+        return new PedidoModel(pedidoRepository.save(pedido));
     }
 
     @Override
-    public Pedido adicionarProduto(UUID id, AdicionarProdutoModel model) {
-        Pedido pedido = this.consultar(id);
-        //List<Produto> produtos = produtoService.consultar(model.getIdsProdutos());
-        List<Produto> produtos = new ArrayList<>();
+    public PedidoModel adicionarProduto(UUID id, AdicionarProdutoModel model) {
+        Pedido pedido = this.buscarPorId(id);
+        List<Produto> produtos = produtoService.consultarProdutos(model.getIdsProdutos());
         pedido.addProdutos(produtos);
-        return pedido;
+        return new PedidoModel(pedidoRepository.save(pedido));
     }
 
     @Override
-    public Pedido pagar(UUID id, PagarPedidoModel model) {
-        var pedido = this.consultar(id);
-        return pedido.pagar(model.getValor());
+    public PedidoModel pagar(UUID id, PagarPedidoModel model) {
+        var pedido = this.buscarPorId(id);
+        return new PedidoModel(pedido.pagar(model.getValor()));
+    }
+
+    private Pedido buscarPorId(UUID id){
+        return pedidoRepository.findById(id).orElseThrow(NaoExisteException::new);
     }
 }
